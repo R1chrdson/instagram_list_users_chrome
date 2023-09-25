@@ -1,0 +1,31 @@
+{
+    "manifest_version": 3,
+    "name": "Instagram users list creator",
+    "description": "The chrome extension that ease list of user tags creation for instagram direct",
+    "version": "1.0",
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": "resources/logo.png"
+    },
+    "background": {
+        "service_worker": "scripts/background.js"
+    },
+    "content_scripts": [
+        {
+            "world": "MAIN",
+            "js": [
+                "scripts/content.js"
+            ],
+            "css": [
+                "scripts/src/add_button.css"
+            ],
+            "matches": [
+                "https://www.instagram.com/direct/*"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "host_permissions": [
+        "https://www.instagram.com/direct/*"
+    ]
+}
