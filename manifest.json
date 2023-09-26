@@ -12,6 +12,9 @@
             "js": [
                 "scripts/content.js"
             ],
+            "css": [
+                "scripts/src/content.css"
+            ],
             "matches": [
                 "https://www.instagram.com/direct/*"
             ],

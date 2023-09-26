@@ -17,6 +17,7 @@ function injectButton() {
     let buttonParent = getElementByXPath(BUTTON_PARENT_XPATH)
     if (buttonParent != null) {
         let button = document.createElement('button')
+        button.id = 'add-to-list-button'
         button.innerHTML = 'Add to list'
         button.onclick = function() {
             let userTag = getElementByXPath(LINK_XPATH).getAttribute('href').slice(1, -1)

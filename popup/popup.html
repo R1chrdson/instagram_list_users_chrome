@@ -3,14 +3,21 @@
 
 <head>
     <link rel="stylesheet" href="popup.css">
-    <script src="popup.js"></script>
+    <script src="popup.js" defer></script>
 </head>
 
 <body>
     <div id="main">
-        <h2>Hello world</h2>
+        <div>
+            <h2>Instagram user tags</h2>
+        </div>
+        <div id="sub-header" class="flex">
+            <div id="total-count"></div>
+        </div>
+        <div id="content">
+            <ul id="list-container"></ul>
+        </div>
     </div>
-
 </body>
 
 </html>
