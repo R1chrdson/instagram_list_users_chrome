@@ -7,25 +7,19 @@
         "default_popup": "popup/popup.html",
         "default_icon": "resources/logo.png"
     },
-    "background": {
-        "service_worker": "scripts/background.js"
-    },
     "content_scripts": [
         {
-            "world": "MAIN",
             "js": [
                 "scripts/content.js"
-            ],
-            "css": [
-                "scripts/src/add_button.css"
             ],
             "matches": [
                 "https://www.instagram.com/direct/*"
             ],
-            "run_at": "document_end"
+            "run_at": "document_start"
         }
     ],
     "host_permissions": [
         "https://www.instagram.com/direct/*"
-    ]
+    ],
+    "permissions": ["storage"]
 }
