@@ -20,22 +20,17 @@ function injectButton() {
         button.innerHTML = 'Add to list'
         button.onclick = function() {
             let userTag = getElementByXPath(LINK_XPATH).getAttribute('href').slice(1, -1)
-            chrome.storage.sync.get(['tags_storage'], function(result) {
+            chrome.storage.local.get(['tags_storage'], function(result) {
                 if (result.tags_storage) {
                     result.tags_storage.push(userTag)
                 }
                 else {
                     result.tags_storage = [userTag]
                 }
-                chrome.storage.sync.set({tags_storage: result.tags_storage}, function() {
+                chrome.storage.local.set({tags_storage: result.tags_storage}, function() {
                     console.log(`${userTag} added to list!`);
                 })
             })
-            // var tags_storage = localStorage.getItem('tags_storage')
-            // tags_storage = tags_storage ? tags_storage.split(',') : []
-            // tags_storage.push(userTag)
-            // localStorage.setItem('tags_storage', tags_storage.toString())
-            // console.log(userTag)
         }
         buttonParent.appendChild(button)
     } else {
