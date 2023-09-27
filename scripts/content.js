@@ -2,41 +2,31 @@
     This script injects button next to user tag in Instagram direct
     The button will send message to background.js to add user to the list
 */
-DIRECT_CHAT_XPATH = "\/\/div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div"
-BUTTON_PARENT_XPATH = "\/\/div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[1]/div/div[1]"
-LINK_XPATH = "\/\/div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[1]/div/div[1]/div[1]/a"
+DIRECT_CHAT_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div"
+BUTTON_PARENT_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[1]/div/div[1]"
+BUTTON2_PARENT_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[1]/div/div/div/div/div[2]"
+LINK_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[1]/div/div[1]/div[1]/a"
 
 function getElementByXPath(path) {
     return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
 function injectButton() {
-    console.log('Injecting button...')
-
-    // Inject button next to user tag
-    let buttonParent = getElementByXPath(BUTTON_PARENT_XPATH)
-    if (buttonParent != null) {
-        let button = document.createElement('button')
-        button.id = 'add-to-list-button'
-        button.innerHTML = 'Add to list'
-        button.onclick = function() {
-            let userTag = getElementByXPath(LINK_XPATH).getAttribute('href').slice(1, -1)
-            chrome.storage.local.get(['tags_storage'], function(result) {
-                if (result.tags_storage) {
-                    result.tags_storage.push(userTag)
-                }
-                else {
-                    result.tags_storage = [userTag]
-                }
-                chrome.storage.local.set({tags_storage: result.tags_storage}, function() {
-                    console.log(`${userTag} added to list!`);
-                })
-            })
+    let userTag = getElementByXPath(LINK_XPATH).getAttribute('href').slice(1, -1)
+    chrome.storage.local.get(['tags_storage'], function(result) {
+        if (result.tags_storage) {
+            if (result.tags_storage.includes(userTag)) {
+                return
+            }
+            result.tags_storage.push(userTag)
         }
-        buttonParent.appendChild(button)
-    } else {
-        console.log("Button's parent not found!")
-    }
+        else {
+            result.tags_storage = [userTag]
+        }
+        chrome.storage.local.set({tags_storage: result.tags_storage}, function() {
+            console.log(`${userTag} added to list!`);
+        })
+    })
 }
 
 async function waitForElementToDisplay(path, timeout) {
