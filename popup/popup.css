@@ -46,3 +46,9 @@ button:hover {
     justify-content: space-between;
     align-items: center;
 }
+
+#new-tag-input {
+    width: 140px;
+    height: 25px;
+    margin-right: 5px;
+}
