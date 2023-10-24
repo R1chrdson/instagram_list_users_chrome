@@ -16,13 +16,13 @@
                 "scripts/src/content.css"
             ],
             "matches": [
-                "https://www.instagram.com/direct/*"
+                "https://www.instagram.com/*"
             ],
             "run_at": "document_start"
         }
     ],
     "host_permissions": [
-        "https://www.instagram.com/direct/*"
+        "https://www.instagram.com/*"
     ],
     "permissions": ["storage"]
 }

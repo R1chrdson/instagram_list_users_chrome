@@ -6,12 +6,18 @@ DIRECT_CHAT_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/secti
 BUTTON_PARENT_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[1]/div/div[1]"
 BUTTON2_PARENT_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[1]/div/div/div/div/div[2]"
 LINK_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[1]/div/div[1]/div[1]/a"
+REQUESTS_HEADER_XPATH = "//div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[1]/div/div/div/div[1]/span"
+START_MESSAGE_BUTTON = "//div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div[4]/div"
 
 function getElementByXPath(path) {
     return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
 function injectButton() {
+    if (getElementByXPath(START_MESSAGE_BUTTON)) {
+        console.log('Select dialog first!')
+        return
+    }
     let userTag = getElementByXPath(LINK_XPATH).getAttribute('href').slice(1, -1)
     chrome.storage.local.get(['tags_storage'], function(result) {
         if (result.tags_storage) {
@@ -38,6 +44,7 @@ async function waitForElementToDisplay(path, timeout) {
     return getElementByXPath(path)
 }
 
+let directChatElement = null
 async function attachChatChangeObserver() {
     directChatElement = await waitForElementToDisplay(DIRECT_CHAT_XPATH, 4000);
     new MutationObserver((a) => {
@@ -47,5 +54,22 @@ async function attachChatChangeObserver() {
     console.log(directChatElement)
 }
 
-attachChatChangeObserver();
-console.log(chrome.storage)
+function isBlacklistedPage() {
+    let requestsHeaderElement = getElementByXPath(REQUESTS_HEADER_XPATH)
+    if (requestsHeaderElement == null) {
+        return true;
+    }
+    return requestsHeaderElement.innerText == 'Message requests';
+}
+
+setInterval(() => {
+    if (isBlacklistedPage()) {
+        return
+    }
+
+    if ((directChatElement == null) || (!directChatElement.isConnected)) {
+        if (window.location.toString().includes('direct')) {
+            attachChatChangeObserver();
+        }
+    }
+}, 1000);
