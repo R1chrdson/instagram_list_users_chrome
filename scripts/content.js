@@ -2,12 +2,12 @@
     This script injects button next to user tag in Instagram direct
     The button will send message to background.js to add user to the list
 */
-DIRECT_CHAT_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div"
-BUTTON_PARENT_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[1]/div/div[1]"
-BUTTON2_PARENT_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[1]/div/div/div/div/div[2]"
-LINK_XPATH = "//div/div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[1]/div/div[1]/div[1]/a"
-REQUESTS_HEADER_XPATH = "//div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[1]/div/div/div/div[1]/span"
-START_MESSAGE_BUTTON = "//div/div/div[2]/div/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div[4]/div"
+DIRECT_CHAT_XPATH = "//div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div"
+BUTTON_PARENT_XPATH = "//div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[1]/div/div[1]"
+BUTTON2_PARENT_XPATH = "//div/div/div/div[2]/div/div/div[1]/div[1]/div[1]/div/div/div/div/div[2]"
+LINK_XPATH = "//div/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div/div/div[1]/div/div[1]/div[1]/a"
+REQUESTS_HEADER_XPATH = "//div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[1]/div/div/div/div[1]/span"
+START_MESSAGE_BUTTON = "//div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/div/div/div/div[1]/div/div[2]/div/div/div/div[4]/div"
 
 function getElementByXPath(path) {
     return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
